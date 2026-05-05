@@ -21,6 +21,7 @@
   overrideConsoleVisibility: true
   whitelisted: true # #Misfits Change
   hideWithoutWhitelist: true # #Misfits Change
+  showBorder: true # #Misfits Add - visual separator: vault-assigned robots begin here
   startingGear: SyntheticGear # #Misfits Fix - triggers EquipIdCard so vault access is applied to nav card
   access: # #Misfits Add - vault access for vault-assigned robot
   - VaultDweller
@@ -80,7 +81,6 @@
   overrideConsoleVisibility: true
   whitelisted: true # #Misfits Change
   hideWithoutWhitelist: true # #Misfits Change
-  showBorder: true # #Misfits Change - moved from MrHandy; MrGutsy sorts first alphabetically so separator belongs here
   startingGear: SyntheticGear # #Misfits Fix - triggers EquipIdCard so vault access is applied to nav card
   access: # #Misfits Add - vault access for vault-assigned robot
   - VaultDweller
@@ -199,3 +199,38 @@
 
 - type: playTimeTracker
   id: SyntheticRobobrain
+
+- type: job
+  id: SyntheticSecuritronBlue
+  name: job-name-synthetic-securitron-blue
+  description: job-description-synthetic-securitron-blue
+  playTimeTracker: SyntheticSecuritronBlue
+  icon: JobIconBorg
+  supervisors: job-supervisors-synthetic
+  canBeAntag: false
+  setPreference: true
+  overrideConsoleVisibility: true
+  whitelisted: true # #Misfits Change
+  hideWithoutWhitelist: true # #Misfits Change
+  startingGear: SyntheticGear # #Misfits Fix - triggers EquipIdCard so vault access is applied to nav card
+  access: # #Misfits Add - vault access for vault-assigned robot
+  - VaultDweller
+  spawnLoadout: false
+  applyTraits: false
+  requirements: # #Misfits Change: lock to species
+  - !type:CharacterSpeciesRequirement
+    species:
+    - RobotSecuritronBlue
+    - RobotSecuritronBrown # #Misfits Add: model variant shares Securitron whitelist/job.
+    - RobotSecuritronGray # #Misfits Add: model variant shares Securitron whitelist/job.
+    - RobotSecuritronRed # #Misfits Add: model variant shares Securitron whitelist/job.
+    - RobotSecuritronYellow # #Misfits Add: model variant shares Securitron whitelist/job.
+  special: # #Misfits Add - register with PlayerRobot faction so Loremaster tab can detect this job
+  - !type:AddComponentSpecial
+    components:
+      - type: NpcFactionMember
+        factions:
+          - PlayerRobot
+
+- type: playTimeTracker
+  id: SyntheticSecuritronBlue
