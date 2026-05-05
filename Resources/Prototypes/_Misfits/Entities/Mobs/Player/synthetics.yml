@@ -1038,3 +1038,121 @@
         - MisfitsRobotNavCardRobCo
       ears: # #Misfits Fix - vault comms: wasteland + vault radio for vault-assigned robot
         - MisfitsClothingHeadsetRobotVault
+
+- type: entity
+  parent: N14BasePlayerSynthetic
+  id: N14PlayerSyntheticSecuritronBlue
+  name: securitron
+  suffix: player, synthetic
+  description: One of many mass produced RobCo Industries security model 2060-Bs, yet this model appears to be programmed to have individual consciousness. It is equipped with a 9mm submachine gun in its right arm and an X-25 Gatling laser in its left. It moves its titanium alloy chassis along with its singular wheel.
+  components:
+  - type: HumanoidAppearance
+    species: RobotSecuritronBlue
+  - type: Sprite
+    sprite: _Nuclear14/Mobs/Robots/securitron-blue.rsi
+    layers:
+    - state: icon
+      map: ["enum.DamageStateVisualLayers.Base", "movement"]
+    - state: on # #Misfits Fix: lit indicator; BorgSystem overrides at runtime
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: on # #Misfits Fix: 'on' RSI state is the lit variant used as the flashlight glow overlay
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: walking
+    noMovementLayers:
+      movement:
+        state: icon
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  # #Misfits Change: Disabled idle/aggro auto-sounds for player-controlled robots — sounds fire uncontrollably while the player is present
+  # - type: IdleSound
+  # - type: SpamEmitSound
+  #   minInterval: 15
+  #   maxInterval: 50
+  #   sound:
+  #     collection: N14ProtectronIdle
+  #     params:
+  #       volume: -7
+  #       maxDistance: 6
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 3.5
+  - type: Armor # #Securitron plating matches BoS Combat Armor MK2 protection values
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.65
+        Heat: 0.65
+  - type: ExplosionResistance # #Securitron chassis in line with BoS Combat Armor MK2 explosive protection
+    damageCoefficient: 0.75
+  - type: NpcFactionMember
+    factions:
+    - Wastelander
+  - type: PassiveDamage # #Misfits Change: gradual self-repair, ~30 per type per minute
+    allowedStates:
+    - Alive
+    - Critical
+    damage:
+      groups:
+        Brute: -0.5
+      types:
+        Heat: -0.5
+        Shock: -0.5
+  - type: RobotSelfRepairAnnouncer # #Hull integrity warnings + self-repair popups
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - CanPilot
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      id: # #Misfits Change: pre-load the nav module into the id inventory slot
+        - MisfitsRobotNavCardRobCo # RobCo Industries Navigation
+      ears: # #Misfits Fix - vault comms: wasteland + vault radio for vault-assigned robot
+        - MisfitsClothingHeadsetRobotVault
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+  - type: Gun # #Misfits Add: built-in gatling laser — fires in bursts then overheats
+    minAngle: 3
+    maxAngle: 15
+    angleIncrease: 4
+    angleDecay: 10
+    fireRate: 6
+    soundGunshot:
+      collection: N14LaserGatlingGunshot
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+  - type: BasicEntityAmmoProvider # #Misfits Add: laser variant uses energy bolts, same overheat system
+    proto: BulletLaser
+    capacity: 20
+    count: 20
+  - type: Gun # #Built-in 9mm submachinegun — fires in bursts
+    minAngle: 5
+    maxAngle: 20
+    angleIncrease: 5
+    angleDecay: 8
+    fireRate: 8
+    soundGunshot:
+      collection: N14MinigunGunshot
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+  - type: BasicEntityAmmoProvider # #Misfits Add: limited magazine — overheat system refills after cooldown
+    proto: N14Bullet5mm
+    capacity: 30
+    count: 30
